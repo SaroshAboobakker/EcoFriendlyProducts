@@ -42,14 +42,38 @@ function searchProducts() {
 // ADD TO CART
 function addToCart(id) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const product = products.find(p => p.id === id);
-    cart.push(product);
+    const existing = cart.find(item => item.id === id);
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        const product = products.find(p => p.id === id);
+        cart.push({ ...product, quantity: 1 });
+    }
     localStorage.setItem("cart", JSON.stringify(cart));
     alert("Product added to cart!");
 }
 
-// LOAD PRODUCTS WHEN PAGE OPENS
-displayProducts(products);
+// CHANGE QUANTITY
+function changeQuantity(id, change) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const item = cart.find(p => p.id === id);
+    if (item) {
+        item.quantity += change;
+        if (item.quantity <= 0) {
+            cart = cart.filter(p => p.id !== id);
+        }
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    displayCart();
+}
+
+// REMOVE FROM CART
+function removeFromCart(id) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart = cart.filter(item => item.id !== id);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    displayCart();
+}
 
 // DISPLAY CART ITEMS
 function displayCart() {
@@ -60,12 +84,18 @@ function displayCart() {
     cartDiv.innerHTML = "";
     let total = 0;
     cart.forEach(item => {
-        total += item.price;
+        total += item.price * item.quantity;
         cartDiv.innerHTML += `
             <div class="product">
                 <img src="${item.image}" alt="${item.name}" style="width:100%; height:150px; object-fit:cover; border-radius:8px;">
                 <h3>${item.name}</h3>
                 <p>$${item.price}</p>
+                <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin-top:10px;">
+                    <button onclick="changeQuantity(${item.id}, -1)">-</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="changeQuantity(${item.id}, 1)">+</button>
+                </div>
+                <button onclick="removeFromCart(${item.id})" style="margin-top:10px; background-color:#e53935;">Remove</button>
             </div>
         `;
     });
@@ -77,12 +107,15 @@ function checkout() {
     window.location.href = "checkout.html";
 }
 
-// LOAD CART WHEN PAGE OPENS
-displayCart();
-
 // PLACE ORDER FUNCTION
 function placeOrder() {
     alert("Payment Successful! Thank you for your purchase.");
     localStorage.removeItem("cart");
     window.location.href = "index.html";
 }
+
+// LOAD PRODUCTS WHEN PAGE OPENS
+displayProducts(products);
+
+// LOAD CART WHEN PAGE OPENS
+displayCart();
