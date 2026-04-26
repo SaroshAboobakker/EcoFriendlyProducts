@@ -108,10 +108,38 @@ function checkout() {
 }
 
 // PLACE ORDER FUNCTION
-function placeOrder() {
-    alert("Payment Successful! Thank you for your purchase.");
-    localStorage.removeItem("cart");
-    window.location.href = "index.html";
+async function placeOrder() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const address = document.getElementById("address").value;
+
+    if (!name || !email || !address) {
+        alert("Please fill in all fields!");
+        return;
+    }
+
+    const order = {
+        name: name,
+        email: email,
+        address: address,
+        items: cart.map(i => `${i.name} x${i.quantity}`).join(", "),
+        total: "$" + cart.reduce((sum, i) => sum + i.price * i.quantity, 0),
+        date: new Date().toLocaleString()
+    };
+
+    try {
+        await fetch("https://script.google.com/macros/s/AKfycby9s3t5BAn54b7L0ntUgdjhOSB00jqs4amB23ZF7wGuh5ennvCWgU34CwbiAeSd7MOT/exec", {
+            method: "POST",
+            body: JSON.stringify(order)
+        });
+        alert("Payment Successful! Thank you for your purchase.");
+        localStorage.removeItem("cart");
+        window.location.href = "index.html";
+    } catch (error) {
+        alert("Something went wrong. Please try again.");
+        console.error(error);
+    }
 }
 
 // LOAD PRODUCTS WHEN PAGE OPENS
