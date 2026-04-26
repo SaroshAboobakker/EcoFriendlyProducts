@@ -58,6 +58,7 @@ function changeQuantity(id, change) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const item = cart.find(p => p.id === id);
     if (item) {
+        item.quantity = item.quantity || 1;
         item.quantity += change;
         if (item.quantity <= 0) {
             cart = cart.filter(p => p.id !== id);
@@ -84,6 +85,7 @@ function displayCart() {
     cartDiv.innerHTML = "";
     let total = 0;
     cart.forEach(item => {
+        item.quantity = item.quantity || 1;
         total += item.price * item.quantity;
         cartDiv.innerHTML += `
             <div class="product">
