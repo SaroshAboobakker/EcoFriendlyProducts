@@ -1,0 +1,146 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f9f4;
+}
+
+/* HEADER */
+header {
+    background-color: #2e7d32;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+/* LOGO */
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo img {
+    width: 50px;
+    margin-right: 10px;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* PAGE TITLE */
+h2 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* SEARCH BAR */
+#search {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    width: 50%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* PRODUCT GRID */
+#product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* PRODUCT CARD */
+.product {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.product:hover {
+    transform: scale(1.03);
+}
+
+/* BUTTON */
+button {
+    background-color: #43a047;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2e7d32;
+}
+
+/* CART PAGE */
+#cart-items {
+    max-width: 600px;
+    margin: auto;
+}
+
+#total {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+/* HERO SECTION (HOME PAGE) */
+section {
+    text-align: center;
+    padding: 30px;
+}
+
+section p {
+    max-width: 600px;
+    margin: auto;
+    font-size: 18px;
+}
+
+.featured-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.featured-product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    width: 200px;
+    background-color: #f9f9f9;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+}
+
+.featured-product img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
